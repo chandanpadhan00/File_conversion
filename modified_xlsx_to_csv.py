@@ -15,13 +15,15 @@ def convert_xlsx_to_csv(input_folder, output_folder):
                 workbook = openpyxl.load_workbook(os.path.join(input_folder, filename), data_only=True)
                 sheet = workbook.active
 
-                # **Access values directly from sheet.values (not header row)**
-                df = pd.DataFrame(sheet.values[1:])  # Skip the first row (header)
+                # Convert to DataFrame using openpyxl's read-only mode, skip the first row, and use the second row as header
+                df = pd.DataFrame(sheet.values)
+                df.columns = df.iloc[0]
+                df = df.iloc[1:]
 
                 # Generate output filename (optional)
                 output_filename = os.path.splitext(filename)[0] + ".csv"
 
-                # Save DataFrame to CSV without index
+                # Save DataFrame to CSV
                 df.to_csv(os.path.join(output_folder, output_filename), index=False, header=True)
 
                 print(f"Converted '{filename}' to '{output_filename}'")
