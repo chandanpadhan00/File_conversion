@@ -1,6 +1,6 @@
 import pandas as pd
 import os
-import openpyxl  # Additional library for handling filters
+import openpyxl
 
 def convert_xlsx_to_csv(input_folder, output_folder):
     if not os.path.isdir(input_folder):
@@ -11,17 +11,14 @@ def convert_xlsx_to_csv(input_folder, output_folder):
     for filename in os.listdir(input_folder):
         if filename.endswith(".xlsx"):
             try:
-                # Use openpyxl to handle filters and read all visible data
-                workbook = openpyxl.load_workbook(os.path.join(input_folder, filename), data_only=True)
-                sheet = workbook.active
+                # Read the Excel file with appropriate error handling
+                wb = openpyxl.load_workbook(os.path.join(input_folder, filename), data_only=True)
+                df = pd.DataFrame(wb.active.values)
 
-                # Convert to DataFrame using openpyxl's read-only mode
-                df = pd.DataFrame(sheet.values)
-
-                # Generate output filename (optional)
+                # Generate a descriptive output filename (optional)
                 output_filename = os.path.splitext(filename)[0] + ".csv"
 
-                # Save DataFrame to CSV
+                # Save the DataFrame to CSV, explicitly excluding the index
                 df.to_csv(os.path.join(output_folder, output_filename), index=False, header=True)
 
                 print(f"Converted '{filename}' to '{output_filename}'")
