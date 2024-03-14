@@ -19,8 +19,8 @@ def concat_xlsx_files(class_name):
     for root, dirs, files in os.walk(main_folder):
         for file in files:
             if file.startswith(f"{class_name}.xlsx"):
-                # Read the .xlsx file into a dataframe, treating 'N/A' as missing values
-                df = pd.read_excel(os.path.join(root, file), na_values='N/A')
+                # Read the .xlsx file into a dataframe
+                df = pd.read_excel(os.path.join(root, file))
                 # Concatenate the dataframe with existing data for the class
                 class_data[class_name] = pd.concat([class_data[class_name], df])
 
