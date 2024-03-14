@@ -19,8 +19,8 @@ def concat_xlsx_files(class_name):
     for root, dirs, files in os.walk(main_folder):
         for file in files:
             if file.startswith(f"{class_name}.xlsx"):
-                # Read the .xlsx file into a dataframe
-                df = pd.read_excel(os.path.join(root, file))
+                # Read the .xlsx file into a dataframe, specifying 'N/A' as NA values
+                df = pd.read_excel(os.path.join(root, file), na_values='N/A')
                 # Concatenate the dataframe with existing data for the class
                 class_data[class_name] = pd.concat([class_data[class_name], df])
 
@@ -31,4 +31,5 @@ for class_name in class_data.keys():
 # Write consolidated data to new .xlsx files in the output folder
 for class_name, df in class_data.items():
     output_path = os.path.join(output_folder, f"{class_name}_consolidated.xlsx")
-    df.to_excel(output_path, index=False, na_rep=pd.NA)
+    # Write to Excel with keeping 'N/A' values intact
+    df.to_excel(output_path, index=False, na_rep='N/A')
