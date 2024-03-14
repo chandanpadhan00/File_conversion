@@ -9,6 +9,9 @@ logging.basicConfig(filename='merge_script.log', level=logging.INFO)
 base_folder = 'path_to_folder_containing_product_folders'
 expected_files_per_class = 6  # Assuming 6 classes per product folder
 
+# Output folder path (replace with your desired location)
+output_folder = 'path/to/output/folder'
+
 
 def merge_and_write_class_data(product_folder_path):
     # Dictionary to store class data
@@ -32,10 +35,10 @@ def merge_and_write_class_data(product_folder_path):
                 processed_files.add(file_name)
                 logging.info(f"Processed file: {file_name}")
 
-    # Write data to separate Excel files for each class
+    # Write data to separate Excel files in the output folder
     for class_number, df in class_data.items():
         if not df.empty:
-            output_file_path = os.path.join(product_folder_path, f'class_{class_number}.xlsx')
+            output_file_path = os.path.join(output_folder, f'class_{class_number}.xlsx')
             print(f"Writing data to: {output_file_path}")
             df.to_excel(output_file_path, index=False)
 
