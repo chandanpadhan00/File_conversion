@@ -35,9 +35,20 @@ def merge_and_write_class_data(product_folder_path):
                 processed_files.add(file_name)
                 logging.info(f"Processed file: {file_name}")
 
+    # Print out processed files
+    print(f"Processed files: {processed_files}")
+
     # Write data to separate Excel files in the output folder
     for class_number, df in class_data.items():
         if not df.empty:
             output_file_path = os.path.join(output_folder, f'class_{class_number}.xlsx')
             print(f"Writing data to: {output_file_path}")
             df.to_excel(output_file_path, index=False)
+
+
+# Iterate over each product folder
+for root, _, product_folders in os.walk(base_folder):
+    for product_folder_name in product_folders:
+        product_folder_path = os.path.join(root, product_folder_name)
+        print(f"Processing folder: {product_folder_path}")
+        merge_and_write_class_data(product_folder_path)
