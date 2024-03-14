@@ -28,6 +28,10 @@ def concat_xlsx_files(class_name):
 for class_name in class_data.keys():
     concat_xlsx_files(class_name)
 
+# Fill N/A values with blank cells
+for class_name, df in class_data.items():
+    class_data[class_name] = df.fillna("")
+
 # Write consolidated data to new .xlsx files in the output folder
 for class_name, df in class_data.items():
     output_path = os.path.join(output_folder, f"{class_name}_consolidated.xlsx")
