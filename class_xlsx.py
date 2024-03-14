@@ -16,7 +16,7 @@ output_folder = 'path/to/output/folder'
 def merge_and_write_class_data(product_folder_path):
     # Dictionary to store class data
     class_data = {}
-    # Set to track processed files
+    # Set to track processed files (local variable)
     processed_files = set()
 
     for root, _, files in os.walk(product_folder_path):
@@ -41,18 +41,3 @@ def merge_and_write_class_data(product_folder_path):
             output_file_path = os.path.join(output_folder, f'class_{class_number}.xlsx')
             print(f"Writing data to: {output_file_path}")
             df.to_excel(output_file_path, index=False)
-
-
-# Iterate over each product folder
-for root, _, product_folders in os.walk(base_folder):
-    for product_folder_name in product_folders:
-        product_folder_path = os.path.join(root, product_folder_name)
-        print(f"Processing folder: {product_folder_path}")
-        merge_and_write_class_data(product_folder_path)
-
-    # Check if all expected files were processed
-    num_processed_files = len(processed_files)
-    if num_processed_files != expected_files_per_class * len(product_folders):
-        print(f"Warning: Expected {expected_files_per_class * len(product_folders)} files, found {num_processed_files}")
-    else:
-        print(f"All expected files for product folder {product_folder_name} seem to be generated.")
