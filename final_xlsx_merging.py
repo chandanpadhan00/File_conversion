@@ -31,4 +31,4 @@ for class_name in class_data.keys():
 # Write consolidated data to new .xlsx files in the output folder
 for class_name, df in class_data.items():
     output_path = os.path.join(output_folder, f"{class_name}_consolidated.xlsx")
-    df.to_excel(output_path, index=False, na_rep='N/A')
+    df.to_excel(output_path, index=False, na_rep=pd.NA)
