@@ -14,10 +14,14 @@ session = boto3.Session(
 )
 
 # Create a SparkSession
-spark = SparkSession.builder.appName("Export Tables to S3").getOrCreate()
-
-# Set the AWS credentials in the Hadoop configuration
-spark._jsc.hadoopConfiguration().set("fs.s3a.access.key", aws_access_key_id)
-spark._jsc.hadoopConfiguration().set("fs.s3a.secret.key", aws_secret_access_key)
+spark = (
+    SparkSession.builder
+    .appName("Export Tables to S3")
+    .config("spark.hadoop.fs.s3a.access.key", aws_access_key_id)
+    .config("spark.hadoop.fs.s3a.secret.key", aws_secret_access_key)
+    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+    .config("spark.hadoop.fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.TemporaryAWSCredentialsProvider")
+    .getOrCreate()
+)
 
 # ... (the rest of your code remains the same)
