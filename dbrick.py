@@ -1,11 +1,6 @@
-from pyspark.sql import SparkSession
-from pyspark import SparkFiles
-import time
+# ... (AWS credentials setup code from the previous example)
 
-# Create a SparkSession
-spark = SparkSession.builder.appName("Export Tables to S3").getOrCreate()
-
-# Replace with your S3 bucket name and folder path
+# S3 bucket name and folder path
 s3_bucket_name = "your-s3-bucket-name"
 s3_folder_path = "path/to/folder"
 
@@ -32,7 +27,7 @@ for table_name in table_names:
     # Write the data to S3 as CSV
     (
         spark.table("temp_table_view")
-        .coalesce(1)  # Adjust the number of output files
+        .coalesce(1)
         .write.format("csv")
         .mode("overwrite")
         .option("header", "true")
