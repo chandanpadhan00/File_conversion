@@ -1,0 +1,8 @@
+
+
+We are pleased to inform you of the updated analysis sheet, now offering comprehensive data encompassing both semantics and PMDM for the manufactured dose form. Furthermore, we have meticulously prepared comparison sheets highlighting instances where ProductName+RMS_Id are absent in PMDM but present in Semantics, as well as cases where they are missing in Semantics but present in PMDM. 
+
+Additionally, for the identified discrepancies, we have conducted thorough term name comparisons between the two sources, ensuring a comprehensive analysis.
+
+Best regards,
+[Your Name/Team Name]"
