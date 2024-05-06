@@ -1,0 +1,11 @@
+UPDATE mnf_ctr_intermediate inter
+SET updated_location_id = (
+    SELECT spor.location_id
+    FROM (
+        SELECT spor.location_id, spor.name,
+               ROW_NUMBER() OVER (PARTITION BY spor.name ORDER BY spor.location_id) rn
+        FROM spor_loc spor
+    ) spor
+    WHERE spor.name = inter.mnfctr AND spor.rn = 1
+)
+WHERE inter.spec_type = 'locid not available';
