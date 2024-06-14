@@ -1,7 +1,7 @@
 import fitz  # PyMuPDF
 
-def extract_section(input_pdf):
-    pdf_document = fitz.open(input_pdf)
+def extract_section(input_pdf_path, output_pdf_path):
+    pdf_document = fitz.open(input_pdf_path)
     
     # Initialize variables to track start and end of section
     start_index = -1
@@ -29,13 +29,20 @@ def extract_section(input_pdf):
         new_pdf = fitz.open()
         new_page = new_pdf.new_page()
         new_page.insert_text((50, 50), section_text)
-        new_pdf.save("chapter_2_section.pdf")
+        
+        # Save the new PDF to the specified output path
+        new_pdf.save(output_pdf_path)
         new_pdf.close()
+        
+        print(f"Section extracted and saved to: {output_pdf_path}")
         
     else:
         print("Section not found in the PDF.")
     
     pdf_document.close()
 
-# Usage example
-extract_section("your_input.pdf")
+# Usage example: Specify both input and output paths
+input_path = "/path/to/your_input.pdf"
+output_path = "/path/to/your_output.pdf"
+
+extract_section(input_path, output_path)
